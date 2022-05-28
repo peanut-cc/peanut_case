@@ -1,8 +1,5 @@
 import logging
-import os
 import traceback
-import openpyxl
-from openpyxl import Workbook
 from handle_excel import ExcelHandle
 import time
 
@@ -12,6 +9,7 @@ class CustomExcelHandle(ExcelHandle):
     def __init__(self, name, upload_file):
         super().__init__(name, upload_file)
         self.custom_name = "美初（无痕）"
+        self.result_file_path = "./result/meichu/美初{0}.xlsx".format(time.strftime("%Y%m%d%H%M%S", time.localtime()))
         self.code_to_barcode = {
             "E211231-3": "0010414",
             "E211231-1": "6973601560836"
@@ -22,15 +20,10 @@ class CustomExcelHandle(ExcelHandle):
         }
 
     def start_handle_excel(self):
-        print("{} start handle excel".format(self.name))
-        workbook = openpyxl.load_workbook(self.upload_file)
-        # 获取第一个 sheet 表格
-        sheet_name = workbook[workbook.sheetnames[0]]
-        wb = Workbook()
-        ws = wb.active
-        ws.append(self.result_excel_header)
+        logging.info("{} start handle excel".format(self.name))
+        wb, ws, items = self.init_read_excel()
         try:
-            for index, row in enumerate(list(sheet_name.rows)[1:]):
+            for index, row in enumerate(items):
                 sn = row[0].value
                 shop_sn = row[0].value
                 receive_people = row[3].value
@@ -57,8 +50,7 @@ class CustomExcelHandle(ExcelHandle):
                 numbers = row[13].value
                 ws.append([sn, shop_sn, "", self.custom_name, receive_people, phone, province, city, county, address,
                            sales_channel_name, product_name, barcode, numbers, unit_price])
-            result_name = "./result/meichu/美初{0}.xlsx".format(time.strftime("%Y%m%d%H%M%S", time.localtime()))
-            wb.save(result_name)
+            wb.save(self.result_file_path)
             logging.info("{0} handle excel file {1} success".format(self.name, self.upload_file))
             self.delete_success_file()
         except Exception as e:
