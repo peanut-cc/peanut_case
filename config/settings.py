@@ -6,5 +6,5 @@ log_config = {
 }
 
 customs_config = [
-    "example",
+    "plugins",
 ]
