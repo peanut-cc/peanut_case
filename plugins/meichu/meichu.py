@@ -48,8 +48,10 @@ class CustomExcelHandle(ExcelHandle):
                     logging.error("handle excel {0} row {1} barcode error".format(self.upload_file, index))
 
                 numbers = row[13].value
-                ws.append([sn, shop_sn, "", self.custom_name, receive_people, phone, province, city, county, address,
-                           sales_channel_name, product_name, barcode, numbers, unit_price])
+                ws.append([sn, shop_sn, "", "", "", "", self.custom_name, "", "", receive_people, phone, "", "",
+                           province, city, county, address, "", "", "", "", "", "", "", "", sales_channel_name, "",
+                           product_name, barcode, "", "", "", numbers, unit_price, "", "", "", "", "", "", "", "", "",
+                           "", "", "", "", "", "", "", ""])
             wb.save(self.result_file_path)
             logging.info("{0} handle excel file {1} success".format(self.name, self.upload_file))
             self.delete_success_file()

@@ -2,7 +2,6 @@ import sys
 import logging
 from logging.handlers import RotatingFileHandler
 from config.settings import log_config
-from config.settings import customs_config
 
 from controller import Controller
 

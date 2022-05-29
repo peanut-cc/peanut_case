@@ -29,8 +29,10 @@ class CustomExcelHandle(ExcelHandle):
                 barcode = row[13].value
                 numbers = row[15].value
                 unit_price = row[18].value
-                ws.append([sn, shop_sn, "", self.custom_name, receive_people, phone, province, city, county, address,
-                           sales_channel_name, product_name, barcode, numbers, unit_price])
+                ws.append([sn, shop_sn, "", "", "", "", self.custom_name, "", "", receive_people, phone, "", "",
+                           province, city, county, address, "", "", "", "", "", "", "", "", sales_channel_name, "",
+                           product_name, barcode, "", "", "", numbers, unit_price, "", "", "", "", "", "", "", "", "",
+                           "", "", "", "", "", "", "", ""])
 
             wb.save(self.result_file_path)
             logging.info("{0} handle excel file {1} success".format(self.name, self.upload_file))
