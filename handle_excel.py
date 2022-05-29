@@ -1,4 +1,5 @@
 import os
+import csv
 import logging
 import openpyxl
 from openpyxl import Workbook
@@ -25,10 +26,25 @@ class ExcelHandle(object):
         workbook = openpyxl.load_workbook(self.upload_file)
         # 获取第一个 sheet 表格
         sheet_name = workbook[workbook.sheetnames[0]]
+        # 这里去创建的 excel
         wb = Workbook()
         ws = wb.active
         ws.append(self.result_excel_header)
         return wb, ws, list(sheet_name.rows)[1:]
+
+    def init_read_csv(self):
+        wb = Workbook()
+        ws = wb.active
+        ws.append(self.result_excel_header)
+        data = list()
+        with open(self.upload_file) as f:
+            f_csv = csv.reader(f)
+            next(f_csv)
+            for row in f_csv:
+                row = [str(i).replace("\t", "") for i in row]
+                data.append(row)
+            print(data)
+            return wb, ws, data
 
     def delete_success_file(self):
         """

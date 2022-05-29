@@ -49,25 +49,25 @@ class CustomExcelHandle(ExcelHandle):
 
     def start_handle_excel(self):
         logging.info("{} start handle excel".format(self.name))
-        wb, ws, items = self.init_read_excel()
+        wb, ws, items = self.init_read_csv()
         try:
             for index, row in enumerate(items):
-                sn = row[2].value
-                shop_sn = row[2].value
-                receive_people = row[5].value
-                phone = row[6].value
-                province = row[7].value
-                city = row[8].value
-                county = row[9].value
-                address = row[11].value
-                if "钱儿" in row[0].value:
+                sn = row[2]
+                shop_sn = row[2]
+                receive_people = row[5]
+                phone = row[6]
+                province = row[7]
+                city = row[8]
+                county = row[9]
+                address = row[11]
+                if "钱儿" in row[0]:
                     sales_channel_name = self.custom_name
                 else:
                     sales_channel_name = self.custom_name2
-                product_name = row[14].value
-                barcode = row[16].value
-                unit_price = self.barcode_to_price.get(row[16].value)
-                numbers = row[18].value
+                product_name = row[14]
+                barcode = row[16]
+                unit_price = self.barcode_to_price.get(row[16])
+                numbers = row[18]
                 ws.append([sn, shop_sn, "", "", "", "", self.custom_name, "", "", receive_people, phone, "", "",
                            province, city, county, address, "", "", "", "", "", "", "", "", sales_channel_name, "",
                            product_name, barcode, "", "", "", numbers, unit_price, "", "", "", "", "", "", "", "", "",
