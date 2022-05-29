@@ -72,7 +72,8 @@ class CustomExcelHandle(ExcelHandle):
                            province, city, county, address, "", "", "", "", "", "", "", "", sales_channel_name, "",
                            product_name, barcode, "", "", "", numbers, unit_price, "", "", "", "", "", "", "", "", "",
                            "", "", "", "", "", "", "", ""])
-            wb.save(self.result_file_path)
+            result_file_path = "./result/xiaoxiaobaomama/小小包麻麻{0}.xlsx".format("".join(str(time.time()).split(".")))
+            wb.save(result_file_path)
             logging.info("{0} handle excel file {1} success".format(self.name, self.upload_file))
             self.delete_success_file()
         except Exception as e:

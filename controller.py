@@ -17,6 +17,7 @@ class Controller(object):
         m, _, c = plugin_name.partition(self.sep)
         mod = importlib.import_module(m, package)
         cls = getattr(mod, c)
+
         return cls(name, upload_file)
 
     def handle_upload_file(self, custom_name, file):

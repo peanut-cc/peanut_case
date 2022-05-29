@@ -9,8 +9,6 @@ class CustomExcelHandle(ExcelHandle):
     def __init__(self, name, upload_file):
         super().__init__(name, upload_file)
         self.custom_name = "梵迄（无痕）"
-        self.result_file_path = "./result/shanghaifanqi/梵迄{0}.xlsx".format(time.strftime("%Y%m%d%H%M%S",
-                                                                                         time.localtime()))
         self.barcode_to_price = {
             "6973601560041": 60,
             "300030001": 109,
@@ -130,9 +128,11 @@ class CustomExcelHandle(ExcelHandle):
                            province, city, county, address, "", "", "", "", "", "", "", "", sales_channel_name, "",
                            product_name, barcode, "", "", "", numbers, unit_price, "", "", "", "", "", "", "", "", "",
                            "", "", "", "", "", "", "", ""])
-            wb.save(self.result_file_path)
+            result_file_path = "./result/shanghaifanqi/梵迄{0}.xlsx".format("".join(str(time.time()).split(".")))
+            wb.save(result_file_path)
             logging.info("{0} handle excel file {1} success".format(self.name, self.upload_file))
-            self.delete_success_file()
         except Exception as e:
             exc = traceback.format_exc()
             logging.error("error %s" % exc)
+        wb.close()
+        self.delete_success_file()
