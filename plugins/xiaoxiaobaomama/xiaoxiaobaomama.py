@@ -68,7 +68,7 @@ class CustomExcelHandle(ExcelHandle):
                 barcode = row[16]
                 unit_price = self.barcode_to_price.get(row[16])
                 numbers = row[18]
-                ws.append([sn, shop_sn, "", "", "", "", self.custom_name, "", "", receive_people, phone, "", "",
+                ws.append([sn, shop_sn, "", "", "", "", sales_channel_name, "", "", receive_people, phone, "", "",
                            province, city, county, address, "", "", "", "", "", "", "", "", sales_channel_name, "",
                            product_name, barcode, "", "", "", numbers, unit_price, "", "", "", "", "", "", "", "", "",
                            "", "", "", "", "", "", "", ""])
