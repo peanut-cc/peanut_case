@@ -20,7 +20,7 @@ var BarcodeToPrice = map[string]string{
 }
 
 func init() {
-	meichu := &Meichu{Name: plugin.DingXiang, CustomName: "美初（无痕）"}
+	meichu := &Meichu{Name: plugin.MeiChu, CustomName: "美初（无痕）"}
 	plugin.PluginMap[plugin.MeiChu] = meichu
 }
 

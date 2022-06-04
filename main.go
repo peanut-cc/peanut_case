@@ -5,6 +5,7 @@ import (
 	"github.com/peanut-cc/peanut_case/plugin"
 	_ "github.com/peanut-cc/peanut_case/plugin/dingxiang"
 	_ "github.com/peanut-cc/peanut_case/plugin/meichu"
+	_ "github.com/peanut-cc/peanut_case/plugin/shanghaifanqi"
 )
 
 func main() {
