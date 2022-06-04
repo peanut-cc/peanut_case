@@ -7,6 +7,7 @@ import (
 	"github.com/xuri/excelize/v2"
 	"log"
 	"os"
+	"strings"
 )
 
 var CodeToBarcode = map[string]string{
@@ -34,7 +35,7 @@ func (p *Meichu) GetPluginName() string {
 }
 
 func (p *Meichu) HandleUploadFile(fileName string) error {
-	rows, err := plugin.ReadExcel(p, fileName)
+	rows, err := plugin.ReadExcel(fileName)
 	if err != nil {
 		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
 		return err
@@ -62,9 +63,9 @@ func (p *Meichu) HandleUploadFile(fileName string) error {
 		county := row[7]
 		address := row[9]
 		salesChannelName := p.CustomName
-		productName := row[10]
-		formatName := row[11]
-		tmpbarcode := row[12]
+		productName := strings.TrimSpace(row[10])
+		formatName := strings.TrimSpace(row[11])
+		tmpbarcode := strings.TrimSpace(row[12])
 		unitPrice := ""
 		barcode := ""
 		numbers := row[13]
@@ -88,7 +89,7 @@ func (p *Meichu) HandleUploadFile(fileName string) error {
 			return err
 		}
 	}
-	filename := fmt.Sprintf("./result/meichu/美初%v.xlsx", uuid.MustString())
+	filename := fmt.Sprintf("./result/美初/美初%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
 		log.Printf("保存{%v} 失败", filename)

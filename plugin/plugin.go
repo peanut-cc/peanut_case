@@ -1,14 +1,18 @@
 package plugin
 
 import (
+	"encoding/csv"
 	"github.com/xuri/excelize/v2"
+
 	"log"
+	"os"
 )
 
 const (
-	DingXiang     = "dingxiang"
-	MeiChu        = "meichu"
-	ShangHaiFanQi = "shanghaifanqi"
+	DingXiang       = "丁香"
+	MeiChu          = "美初"
+	ShangHaiFanQi   = "上海梵迄"
+	XiaoXiaoBaoMaMa = "小小包麻麻"
 )
 
 var RowHeader = []string{"导入编号", "网店订单号", "下单时间", "付款时间", "承诺发货时间", "客户账号", "客户名称",
@@ -32,7 +36,7 @@ func init() {
 }
 
 // ReadExcel 读取 excel 并返回所有行数据
-func ReadExcel(p Plugin, fileName string) ([][]string, error) {
+func ReadExcel(fileName string) ([][]string, error) {
 	f, err := excelize.OpenFile(fileName)
 	if err != nil {
 		return nil, err
@@ -48,4 +52,20 @@ func ReadExcel(p Plugin, fileName string) ([][]string, error) {
 		return nil, err
 	}
 	return rows, nil
+}
+
+// ReadCSV 解析csv数据
+func ReadCSV(fileName string) ([][]string, error) {
+	f, err := os.Open(fileName)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	csvReader := csv.NewReader(f)
+	csvReader.TrimLeadingSpace = true
+	data, err := csvReader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
 }

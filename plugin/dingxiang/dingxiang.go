@@ -24,7 +24,7 @@ func (p *DingXiang) GetPluginName() string {
 }
 
 func (p *DingXiang) HandleUploadFile(fileName string) error {
-	rows, err := plugin.ReadExcel(p, fileName)
+	rows, err := plugin.ReadExcel(fileName)
 	if err != nil {
 		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
 		return err
@@ -66,7 +66,7 @@ func (p *DingXiang) HandleUploadFile(fileName string) error {
 			return err
 		}
 	}
-	filename := fmt.Sprintf("./result/dingxiang/丁香%v.xlsx", uuid.MustString())
+	filename := fmt.Sprintf("./result/丁香/丁香%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
 		log.Printf("保存{%v} 失败", filename)

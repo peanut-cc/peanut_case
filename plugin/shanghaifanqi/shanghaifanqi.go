@@ -7,6 +7,7 @@ import (
 	"github.com/xuri/excelize/v2"
 	"log"
 	"os"
+	"strings"
 )
 
 var BoardeToPrice = map[string]string{
@@ -121,7 +122,7 @@ func (p *ShangHaiFanQi) GetPluginName() string {
 }
 
 func (p *ShangHaiFanQi) HandleUploadFile(fileName string) error {
-	rows, err := plugin.ReadExcel(p, fileName)
+	rows, err := plugin.ReadExcel(fileName)
 	if err != nil {
 		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
 		return err
@@ -150,7 +151,7 @@ func (p *ShangHaiFanQi) HandleUploadFile(fileName string) error {
 		address := row[10]
 		salesChannelName := p.CustomName
 		productName := row[3]
-		barcode := row[7]
+		barcode := strings.TrimSpace(row[7])
 		//unitPrice := ""
 		unitPrice, ok := BoardeToPrice[barcode]
 		if !ok {
@@ -169,18 +170,19 @@ func (p *ShangHaiFanQi) HandleUploadFile(fileName string) error {
 			productName, barcode, "", "", "", numbers, unitPrice, "", "", "", "", "", "", "", "", "",
 			"", "", "", "", "", "", "", ""})
 		if err != nil {
-			log.Printf("客户 {%v} 写excel 第 {%v} 错误", p.Name, index)
+			log.Printf("客户 {%v} 写excel 第 {%v} 错误:{%v}", p.Name, index, err)
 			return err
 		}
 	}
-	filename := fmt.Sprintf("./result/shanghaifanqi/梵迄%v.xlsx", uuid.MustString())
+	filename := fmt.Sprintf("./result/上海梵迄/梵迄%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
-		log.Printf("保存{%v} 失败", filename)
+		log.Printf("保存{%v} 失败:{%v}", filename, err)
 		return err
 	}
-	if err := p.DeleteUploadFile(fileName); err != nil {
-		log.Printf("删除{%v} 失败", fileName)
+	err = p.DeleteUploadFile(fileName)
+	if err != nil {
+		log.Printf("删除{%v} 失败:{%v}", fileName, err)
 		return err
 	}
 	log.Printf("客户{%v} 订单{%v}处理完毕", p.Name, fileName)
