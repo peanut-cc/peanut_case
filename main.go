@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/peanut-cc/peanut_case/plugin"
 	_ "github.com/peanut-cc/peanut_case/plugin/dingxiang"
+	_ "github.com/peanut-cc/peanut_case/plugin/meichu"
 )
 
 func main() {

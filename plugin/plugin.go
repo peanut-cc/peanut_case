@@ -1,12 +1,13 @@
 package plugin
 
 import (
-	"fmt"
 	"github.com/xuri/excelize/v2"
+	"log"
 )
 
 const (
 	DingXiang = "dingxiang"
+	MeiChu    = "meichu"
 )
 
 var RowHeader = []string{"导入编号", "网店订单号", "下单时间", "付款时间", "承诺发货时间", "客户账号", "客户名称",
@@ -37,7 +38,7 @@ func ReadExcel(p Plugin, fileName string) ([][]string, error) {
 	}
 	defer func() {
 		if err := f.Close(); err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		}
 	}()
 	firstSheet := f.GetSheetName(0)

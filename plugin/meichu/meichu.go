@@ -1,4 +1,4 @@
-package dingxiang
+package meichu
 
 import (
 	"fmt"
@@ -9,21 +9,31 @@ import (
 	"os"
 )
 
-func init() {
-	dingxiang := &DingXiang{Name: plugin.DingXiang, CustomName: "丁香（无痕）"}
-	plugin.PluginMap[plugin.DingXiang] = dingxiang
+var CodeToBarcode = map[string]string{
+	"E211231-3": "0010414",
+	"E211231-1": "6973601560836",
 }
 
-type DingXiang struct {
+var BarcodeToPrice = map[string]string{
+	"0010414":       "59",
+	"6973601560836": "28",
+}
+
+func init() {
+	meichu := &Meichu{Name: plugin.DingXiang, CustomName: "美初（无痕）"}
+	plugin.PluginMap[plugin.MeiChu] = meichu
+}
+
+type Meichu struct {
 	Name       string
 	CustomName string
 }
 
-func (p *DingXiang) GetPluginName() string {
+func (p *Meichu) GetPluginName() string {
 	return p.Name
 }
 
-func (p *DingXiang) HandleUploadFile(fileName string) error {
+func (p *Meichu) HandleUploadFile(fileName string) error {
 	rows, err := plugin.ReadExcel(p, fileName)
 	if err != nil {
 		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
@@ -43,19 +53,31 @@ func (p *DingXiang) HandleUploadFile(fileName string) error {
 		if index == 0 {
 			continue
 		}
-		sn := row[2]
-		shopSn := row[2]
-		receivePeople := row[19]
-		phone := row[20]
-		province := row[21]
-		city := row[22]
-		county := row[23]
-		address := row[24]
+		sn := row[0]
+		shopSn := row[0]
+		receivePeople := row[3]
+		phone := row[4]
+		province := row[5]
+		city := row[6]
+		county := row[7]
+		address := row[9]
 		salesChannelName := p.CustomName
 		productName := row[10]
-		barcode := row[13]
-		numbers := row[15]
-		unitPrice := row[18]
+		formatName := row[11]
+		tmpbarcode := row[12]
+		unitPrice := ""
+		barcode := ""
+		numbers := row[13]
+		if productName == "仁和黄金油柑酵素" && formatName == "3盒（买二送一）" && tmpbarcode == "E211231-3" {
+			barcode = CodeToBarcode[tmpbarcode]
+			unitPrice = BarcodeToPrice[barcode]
+		} else if productName == "仁和黄金油柑酵素" && formatName == "1盒" && tmpbarcode == "E211231-1" {
+			barcode = CodeToBarcode[tmpbarcode]
+			unitPrice = BarcodeToPrice[barcode]
+		} else {
+			barcode = "条码错误"
+			log.Printf("客户{%v} 处理excel {%v} 行 条码处理错误", p.Name, index)
+		}
 		axis := fmt.Sprintf("A%d", index+1)
 		err = f.SetSheetRow(sheetName, axis, &[]string{sn, shopSn, "", "", "", "", p.CustomName, "", "", receivePeople, phone, "", "",
 			province, city, county, address, "", "", "", "", "", "", "", "", salesChannelName, "",
@@ -66,7 +88,7 @@ func (p *DingXiang) HandleUploadFile(fileName string) error {
 			return err
 		}
 	}
-	filename := fmt.Sprintf("./result/dingxiang/丁香%v.xlsx", uuid.MustString())
+	filename := fmt.Sprintf("./result/meichu/美初%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
 		log.Printf("保存{%v} 失败", filename)
@@ -80,6 +102,6 @@ func (p *DingXiang) HandleUploadFile(fileName string) error {
 	return nil
 }
 
-func (p *DingXiang) DeleteUploadFile(fileName string) error {
+func (p *Meichu) DeleteUploadFile(fileName string) error {
 	return os.Remove(fileName)
 }
