@@ -158,6 +158,7 @@ func (p *ShangHaiFanQi) HandleUploadFile(fileName string) error {
 			key := fmt.Sprintf("00%v", barcode)
 			unitPrice2, ok2 := BoardeToPrice[key]
 			if ok2 {
+				barcode = key
 				unitPrice = unitPrice2
 			} else {
 				unitPrice = "条码错误"
