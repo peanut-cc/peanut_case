@@ -3,6 +3,7 @@ package plugin
 import (
 	"encoding/csv"
 	"github.com/xuri/excelize/v2"
+	"time"
 
 	"log"
 	"os"
@@ -37,9 +38,19 @@ func init() {
 
 // ReadExcel 读取 excel 并返回所有行数据
 func ReadExcel(fileName string) ([][]string, error) {
-	f, err := excelize.OpenFile(fileName)
-	if err != nil {
-		return nil, err
+	var f *excelize.File
+	var err error
+	var num = 1
+	// 每个文件尝试打开10次,10次之后打不开就放弃
+	for num <= 10 {
+		f, err = excelize.OpenFile(fileName)
+		if err != nil {
+			time.Sleep(1 * time.Second)
+			log.Printf("打开文件错误:{%v} ,睡眠 1s 第{%v}次尝试打开文件{%v}", err, num, fileName)
+			num += 1
+			continue
+		}
+		break
 	}
 	defer func() {
 		if err := f.Close(); err != nil {
@@ -51,16 +62,33 @@ func ReadExcel(fileName string) ([][]string, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("读取{%v}内容成功\n", fileName)
 	return rows, nil
 }
 
 // ReadCSV 解析csv数据
 func ReadCSV(fileName string) ([][]string, error) {
-	f, err := os.Open(fileName)
+	var f *os.File
+	var err error
+	var num = 1
+	for num <= 10 {
+		f, err = os.Open(fileName)
+		if err != nil {
+			time.Sleep(1 * time.Second)
+			log.Printf("打开文件错误:{%v} ,睡眠 1s 第{%v}次尝试打开文件{%v}", err, num, fileName)
+			num += 1
+			continue
+		}
+		break
+	}
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer func() {
+		if err := f.Close(); err != nil {
+			log.Println(err)
+		}
+	}()
 	csvReader := csv.NewReader(f)
 	csvReader.TrimLeadingSpace = true
 	data, err := csvReader.ReadAll()

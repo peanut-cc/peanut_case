@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	CustomName     = "钱儿（无痕）"
-	CustomName2    = "小小包麻麻（无痕）"
+	CustomName     = "无痕-宿迁市亿宝文化传播有限公司（钱儿）"
+	CustomName2    = "无痕-宿迁市百宝信息科技有限公司（小小包麻麻）"
 	BarcodeToPrice = map[string]string{
 		"6970869081288": "17",
 		"6970869080946": "17",
@@ -51,7 +51,7 @@ var (
 )
 
 func init() {
-	mama := &XiaoXiaoBaoMaMa{Name: plugin.XiaoXiaoBaoMaMa, CustomName: "梵迄（无痕）"}
+	mama := &XiaoXiaoBaoMaMa{Name: plugin.XiaoXiaoBaoMaMa, CustomName: "无痕-宿迁市亿宝文化传播有限公司（钱儿）"}
 	plugin.PluginMap[plugin.XiaoXiaoBaoMaMa] = mama
 }
 
@@ -67,7 +67,7 @@ func (p *XiaoXiaoBaoMaMa) GetPluginName() string {
 func (p *XiaoXiaoBaoMaMa) HandleUploadFile(fileName string) error {
 	rows, err := plugin.ReadCSV(fileName)
 	if err != nil {
-		fmt.Printf("客户{%v} 打开csv 报错{%v}", p.GetPluginName(), err)
+		fmt.Printf("客户{%v} 打开csv 报错{%v}\n", p.GetPluginName(), err)
 		return err
 	}
 	f := excelize.NewFile()
@@ -75,7 +75,7 @@ func (p *XiaoXiaoBaoMaMa) HandleUploadFile(fileName string) error {
 	sheetName := f.GetSheetName(sheet)
 	err = f.SetSheetRow(sheetName, "A1", &plugin.RowHeader)
 	if err != nil {
-		log.Printf("客户 {%v} 创建excel失败", p.Name)
+		log.Printf("客户 {%v} 创建excel失败\n", p.Name)
 		return err
 	}
 	for index, row := range rows {
@@ -110,21 +110,21 @@ func (p *XiaoXiaoBaoMaMa) HandleUploadFile(fileName string) error {
 			productName, barcode, "", "", "", numbers, unitPrice, "", "", "", "", "", "", "", "", "",
 			"", "", "", "", "", "", "", ""})
 		if err != nil {
-			log.Printf("客户 {%v} 写excel 第 {%v} 错误", p.Name, index)
+			log.Printf("客户 {%v} 写excel 第 {%v} 错误\n", p.Name, index)
 			return err
 		}
 	}
 	filename := fmt.Sprintf("./result/小小包麻麻/小小包麻麻%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
-		log.Printf("保存{%v} 失败", filename)
+		log.Printf("保存{%v} 失败\n", filename)
 		return err
 	}
 	if err := p.DeleteUploadFile(fileName); err != nil {
-		log.Printf("删除{%v} 失败", fileName)
+		log.Printf("删除{%v} 失败\n", fileName)
 		return err
 	}
-	log.Printf("客户{%v} 订单{%v}处理完毕", p.Name, fileName)
+	log.Printf("客户{%v} 订单{%v}处理完毕\n", p.Name, fileName)
 	return nil
 }
 

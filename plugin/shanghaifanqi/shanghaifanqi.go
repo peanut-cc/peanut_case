@@ -108,7 +108,7 @@ var BoardeToPrice = map[string]string{
 }
 
 func init() {
-	shanghaifanqi := &ShangHaiFanQi{Name: plugin.ShangHaiFanQi, CustomName: "梵迄（无痕）"}
+	shanghaifanqi := &ShangHaiFanQi{Name: plugin.ShangHaiFanQi, CustomName: "无痕-上海东荟西通商贸有限公司（梵迄）"}
 	plugin.PluginMap[plugin.ShangHaiFanQi] = shanghaifanqi
 }
 
@@ -132,7 +132,7 @@ func (p *ShangHaiFanQi) HandleUploadFile(fileName string) error {
 	sheetName := f.GetSheetName(sheet)
 	err = f.SetSheetRow(sheetName, "A1", &plugin.RowHeader)
 	if err != nil {
-		log.Printf("客户 {%v} 创建excel失败", p.Name)
+		log.Printf("客户 {%v} 创建excel失败\n", p.Name)
 		return err
 	}
 
@@ -177,15 +177,15 @@ func (p *ShangHaiFanQi) HandleUploadFile(fileName string) error {
 	filename := fmt.Sprintf("./result/上海梵迄/梵迄%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
-		log.Printf("保存{%v} 失败:{%v}", filename, err)
+		log.Printf("保存{%v} 失败:{%v}\n", filename, err)
 		return err
 	}
 	err = p.DeleteUploadFile(fileName)
 	if err != nil {
-		log.Printf("删除{%v} 失败:{%v}", fileName, err)
+		log.Printf("删除{%v} 失败:{%v}\n", fileName, err)
 		return err
 	}
-	log.Printf("客户{%v} 订单{%v}处理完毕", p.Name, fileName)
+	log.Printf("客户{%v} 订单{%v}处理完毕\n", p.Name, fileName)
 	return nil
 }
 

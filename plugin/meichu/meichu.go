@@ -21,7 +21,7 @@ var BarcodeToPrice = map[string]string{
 }
 
 func init() {
-	meichu := &Meichu{Name: plugin.MeiChu, CustomName: "美初（无痕）"}
+	meichu := &Meichu{Name: plugin.MeiChu, CustomName: "无痕-美初"}
 	plugin.PluginMap[plugin.MeiChu] = meichu
 }
 
@@ -37,7 +37,7 @@ func (p *Meichu) GetPluginName() string {
 func (p *Meichu) HandleUploadFile(fileName string) error {
 	rows, err := plugin.ReadExcel(fileName)
 	if err != nil {
-		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
+		fmt.Printf("客户{%v} 打开excel 报错{%v}\n", p.GetPluginName(), err)
 		return err
 	}
 	f := excelize.NewFile()
@@ -45,7 +45,7 @@ func (p *Meichu) HandleUploadFile(fileName string) error {
 	sheetName := f.GetSheetName(sheet)
 	err = f.SetSheetRow(sheetName, "A1", &plugin.RowHeader)
 	if err != nil {
-		log.Printf("客户 {%v} 创建excel失败", p.Name)
+		log.Printf("客户 {%v} 创建excel失败\n", p.Name)
 		return err
 	}
 
@@ -77,7 +77,7 @@ func (p *Meichu) HandleUploadFile(fileName string) error {
 			unitPrice = BarcodeToPrice[barcode]
 		} else {
 			barcode = "条码错误"
-			log.Printf("客户{%v} 处理excel {%v} 行 条码处理错误", p.Name, index)
+			log.Printf("客户{%v} 处理excel {%v} 行 条码处理错误\n", p.Name, index)
 		}
 		axis := fmt.Sprintf("A%d", index+1)
 		err = f.SetSheetRow(sheetName, axis, &[]string{sn, shopSn, "", "", "", "", p.CustomName, "", "", receivePeople, phone, "", "",
@@ -85,21 +85,21 @@ func (p *Meichu) HandleUploadFile(fileName string) error {
 			productName, barcode, "", "", "", numbers, unitPrice, "", "", "", "", "", "", "", "", "",
 			"", "", "", "", "", "", "", ""})
 		if err != nil {
-			log.Printf("客户 {%v} 写excel 第 {%v} 错误", p.Name, index)
+			log.Printf("客户 {%v} 写excel 第 {%v} 错误\n", p.Name, index)
 			return err
 		}
 	}
 	filename := fmt.Sprintf("./result/美初/美初%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
-		log.Printf("保存{%v} 失败", filename)
+		log.Printf("保存{%v} 失败\n", filename)
 		return err
 	}
 	if err := p.DeleteUploadFile(fileName); err != nil {
-		log.Printf("删除{%v} 失败", fileName)
+		log.Printf("删除{%v} 失败\n", fileName)
 		return err
 	}
-	log.Printf("客户{%v} 订单{%v}处理完毕", p.Name, fileName)
+	log.Printf("客户{%v} 订单{%v}处理完毕\n", p.Name, fileName)
 	return nil
 }
 

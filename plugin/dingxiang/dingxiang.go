@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	dingxiang := &DingXiang{Name: plugin.DingXiang, CustomName: "丁香（无痕）"}
+	dingxiang := &DingXiang{Name: plugin.DingXiang, CustomName: "无痕-杭州丁香健康管理有限公司（丁香）"}
 	plugin.PluginMap[plugin.DingXiang] = dingxiang
 }
 
@@ -34,7 +34,7 @@ func (p *DingXiang) HandleUploadFile(fileName string) error {
 	sheetName := f.GetSheetName(sheet)
 	err = f.SetSheetRow(sheetName, "A1", &plugin.RowHeader)
 	if err != nil {
-		log.Printf("客户 {%v} 创建excel失败", p.Name)
+		log.Printf("客户 {%v} 创建excel失败\n", p.Name)
 		return err
 	}
 
@@ -62,21 +62,21 @@ func (p *DingXiang) HandleUploadFile(fileName string) error {
 			productName, barcode, "", "", "", numbers, unitPrice, "", "", "", "", "", "", "", "", "",
 			"", "", "", "", "", "", "", ""})
 		if err != nil {
-			log.Printf("客户 {%v} 写excel 第 {%v} 错误", p.Name, index)
+			log.Printf("客户 {%v} 写excel 第 {%v} 错误\n", p.Name, index)
 			return err
 		}
 	}
 	filename := fmt.Sprintf("./result/丁香/丁香%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
-		log.Printf("保存{%v} 失败", filename)
+		log.Printf("保存{%v} 失败\n", filename)
 		return err
 	}
 	if err := p.DeleteUploadFile(fileName); err != nil {
-		log.Printf("删除{%v} 失败", fileName)
+		log.Printf("删除{%v} 失败\n", fileName)
 		return err
 	}
-	log.Printf("客户{%v} 订单{%v}处理完毕", p.Name, fileName)
+	log.Printf("客户{%v} 订单{%v}处理完毕\n", p.Name, fileName)
 	return nil
 }
 
