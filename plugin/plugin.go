@@ -57,6 +57,9 @@ func ReadExcel(fileName string) ([][]string, error) {
 			log.Println(err)
 		}
 	}()
+	if err != nil {
+		return nil, err
+	}
 	firstSheet := f.GetSheetName(0)
 	rows, err := f.GetRows(firstSheet)
 	if err != nil {
