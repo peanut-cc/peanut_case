@@ -17,7 +17,7 @@ var ProductTypePrice = map[string]map[string]string{
 }
 
 func init() {
-	fuYuanDa := &JinYouRuanTang{Name: plugin.DingXiang, CustomName: "无痕-媛福达"}
+	fuYuanDa := &JinYouRuanTang{Name: plugin.FuYuanDa, CustomName: "无痕-媛福达"}
 	plugin.PluginMap[plugin.FuYuanDa] = fuYuanDa
 }
 

@@ -9,6 +9,7 @@ import (
 	_ "github.com/peanut-cc/peanut_case/plugin/shanghaifanqi"
 	_ "github.com/peanut-cc/peanut_case/plugin/xiaoxiaobaomama"
 	_ "github.com/peanut-cc/peanut_case/plugin/yuanfuda_jinyouruantang"
+	_ "github.com/peanut-cc/peanut_case/plugin/yunfan"
 	"os"
 )
 
@@ -25,7 +26,8 @@ func initResultDir() {
 	os.MkdirAll("./result/跟团号/仅有凝胶", os.ModePerm)
 	os.MkdirAll("./upload/媛福达/仅有软糖", os.ModePerm)
 	os.MkdirAll("./result/媛福达", os.ModePerm)
-
+	os.MkdirAll("./upload/云帆", os.ModePerm)
+	os.MkdirAll("./result/云帆", os.ModePerm)
 }
 
 func main() {
