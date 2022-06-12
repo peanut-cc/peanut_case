@@ -1,4 +1,4 @@
-package yuanfuda_jinyouruantang
+package yuanfuda_fuyanjie
 
 import (
 	"fmt"
@@ -9,28 +9,60 @@ import (
 	"os"
 )
 
-var ProductTypePrice = map[string]map[string]string{
-	"3g*30粒/盒*2": {
-		"barcode":   "0010449",
-		"unitPrice": "45",
+var SkuToBarcodePrice = map[string]map[string]string{
+	"8171687192": {
+		"barcode":   "300091001",
+		"unitPrice": "24",
+	},
+	"8821982978": {
+		"barcode":   "0010163",
+		"unitPrice": "23.5",
+	},
+	"8418717878": {
+		"barcode":   "0010291",
+		"unitPrice": "20.7",
+	},
+	"8919894225": {
+		"barcode":   "3000830015",
+		"unitPrice": "39",
+	},
+	"8761455045": {
+		"barcode":   "0010180",
+		"unitPrice": "20",
+	},
+	"8170740142": {
+		"barcode":   "6973601560782",
+		"unitPrice": "71",
+	},
+	"8919894625": {
+		"barcode":   "6939713005085",
+		"unitPrice": "19",
+	},
+	"8170740954": {
+		"barcode":   "0010348",
+		"unitPrice": "183",
+	},
+	"8170106377": {
+		"barcode":   "6973601560836 ",
+		"unitPrice": "33",
 	},
 }
 
 func init() {
-	fuYuanDa := &JinYouRuanTang{Name: plugin.FuYuanDaJinYouRuanTan, CustomName: "无痕-媛福达"}
-	plugin.PluginMap[plugin.FuYuanDaJinYouRuanTan] = fuYuanDa
+	fuYuanDaYuYanJie := &YuanFudaFuYanJie{Name: plugin.FuYuanDaFuYanJie, CustomName: "无痕-媛福达"}
+	plugin.PluginMap[plugin.FuYuanDaFuYanJie] = fuYuanDaYuYanJie
 }
 
-type JinYouRuanTang struct {
+type YuanFudaFuYanJie struct {
 	Name       string
 	CustomName string
 }
 
-func (p *JinYouRuanTang) GetPluginName() string {
+func (p *YuanFudaFuYanJie) GetPluginName() string {
 	return p.Name
 }
 
-func (p *JinYouRuanTang) HandleUploadFile(fileName string) error {
+func (p *YuanFudaFuYanJie) HandleUploadFile(fileName string) error {
 	rows, err := plugin.ReadExcel(fileName)
 	if err != nil {
 		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
@@ -50,19 +82,19 @@ func (p *JinYouRuanTang) HandleUploadFile(fileName string) error {
 		if index == 0 {
 			continue
 		}
-		sn := row[3]
-		shopSn := row[3]
-		receivePeople := row[5]
-		phone := row[6]
-		province := row[8]
-		city := row[9]
-		county := row[10]
-		address := row[12]
+		sn := row[0]
+		shopSn := row[0]
+		receivePeople := row[3]
+		phone := row[4]
+		province := ""
+		city := ""
+		county := ""
+		address := row[5]
 		salesChannelName := p.CustomName
-		productName := row[19]
-		numbers := row[20]
-		productType := row[15]
-		bardcodeAndPriceMap, ok := ProductTypePrice[productType]
+		productName := row[7]
+		numbers := row[10]
+		sku := row[9]
+		bardcodeAndPriceMap, ok := SkuToBarcodePrice[sku]
 		barcode := ""
 		unitPrice := ""
 		if ok {
@@ -82,7 +114,7 @@ func (p *JinYouRuanTang) HandleUploadFile(fileName string) error {
 			return err
 		}
 	}
-	filename := fmt.Sprintf("./result/媛福达/媛福达_仅有软糖%v.xlsx", uuid.MustString())
+	filename := fmt.Sprintf("./result/媛福达/媛福达_妇炎洁%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
 		log.Printf("保存{%v} 失败\n", filename)
@@ -96,6 +128,6 @@ func (p *JinYouRuanTang) HandleUploadFile(fileName string) error {
 	return nil
 }
 
-func (p *JinYouRuanTang) DeleteUploadFile(fileName string) error {
+func (p *YuanFudaFuYanJie) DeleteUploadFile(fileName string) error {
 	return os.Remove(fileName)
 }
