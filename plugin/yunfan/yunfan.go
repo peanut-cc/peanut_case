@@ -42,8 +42,8 @@ var SaleChannelBarcodePrice = map[string]map[string]string{
 		"6973601560027": "19.07",
 	},
 	TaoMeiWu: {
-		"0010414":       "66",
-		"6973601560836": "33",
+		"0010414":       "59",
+		"6973601560836": "28",
 	},
 	WeiYangYouPin: {
 		"0010414":       "59",
