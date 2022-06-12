@@ -19,7 +19,7 @@ var (
 	WeiYangYouPin   = "无痕-未央优品"
 	YiFeiFan        = "无痕-上海艺梵电子商务有限公司（艺非凡）"
 	ShiDianDuShu    = "无痕-厦门十点电子商务有限公司（十点读书)"
-	LiXiangShengHuo = "小羽私厨（无痕）"
+	LiXiangShengHuo = "无痕-浙江和跃天明贸易有限公司（小羽私厨）"
 )
 
 var SaleChannelBarcodePrice = map[string]map[string]string{
