@@ -60,6 +60,7 @@ var SaleChannelBarcodePrice = map[string]map[string]string{
 		"6970869080946": "18",
 		"6970869081295": "18",
 		"200050039":     "36",
+		"0010414":       "119",
 	},
 	LiXiangShengHuo: {
 		"300083001036": "30.88",
