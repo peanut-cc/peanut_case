@@ -11,15 +11,16 @@ import (
 )
 
 var (
-	JiGuo           = "无痕-天津极果优品电子商务有限公司（极果）"
-	JunJun          = "无痕-上海卿禾科技工作室（君君辅食记）"
-	LeTuiZu         = "无痕-北京银铃文化传播有限公司（乐退族）"
-	ABaoYanXuan     = "无痕-湖南态度日升网络科技有限公司（态度心选）"
-	TaoMeiWu        = "无痕-桃美物"
-	WeiYangYouPin   = "无痕-未央优品"
-	YiFeiFan        = "无痕-上海艺梵电子商务有限公司（艺非凡）"
-	ShiDianDuShu    = "无痕-厦门十点电子商务有限公司（十点读书)"
-	LiXiangShengHuo = "无痕-浙江和跃天明贸易有限公司（小羽私厨）"
+	JiGuo             = "无痕-天津极果优品电子商务有限公司（极果）"
+	JunJun            = "无痕-上海卿禾科技工作室（君君辅食记）"
+	LeTuiZu           = "无痕-北京银铃文化传播有限公司（乐退族）"
+	ABaoYanXuan       = "无痕-湖南态度日升网络科技有限公司（态度心选）"
+	TaoMeiWu          = "无痕-桃美物"
+	WeiYangYouPin     = "无痕-未央优品"
+	YiFeiFan          = "无痕-上海艺梵电子商务有限公司（艺非凡）"
+	ShiDianDuShu      = "无痕-厦门十点电子商务有限公司（十点读书)"
+	LiXiangShengHuo   = "无痕-浙江和跃天明贸易有限公司（小羽私厨）"
+	YouJianQuanQiuGou = "无痕-有间全球购"
 )
 
 var SaleChannelBarcodePrice = map[string]map[string]string{
@@ -86,6 +87,16 @@ var NoBarcode = map[string]map[string]map[string]string{
 		"50g": {
 			"barcode":   "6973601560119",
 			"unitPrice": "19.9",
+		},
+	},
+	YouJianQuanQiuGou: {
+		"2瓶装": {
+			"barcode":   "0010362",
+			"unitPrice": "125",
+		},
+		"1瓶装": {
+			"barcode":   "6973601560782",
+			"unitPrice": "69",
 		},
 	},
 }
@@ -245,6 +256,24 @@ func (p *YunFan) HandleUploadFile(fileName string) error {
 				unitPrice = "数据错误"
 			} else {
 				unitPrice = barcodePrice[barcode]
+			}
+		} else if strings.Contains(tmpChannelName, "有间全球购") {
+			p.CustomName = YouJianQuanQiuGou
+			noBarcodePriceMap := NoBarcode[YouJianQuanQiuGou]
+			if strings.Contains(productType, "2瓶装") {
+				productType = "2瓶装"
+			} else if strings.Contains(productType, "2瓶装") {
+				productType = "1瓶装"
+			} else {
+				productType = ""
+			}
+			BarcodePrice, ok := noBarcodePriceMap[productType]
+			if ok {
+				barcode = BarcodePrice["barcode"]
+				unitPrice = BarcodePrice["unitPrice"]
+			} else {
+				barcode = "数据错误"
+				unitPrice = "数据错误"
 			}
 		} else {
 			p.CustomName = "未知"
