@@ -43,8 +43,28 @@ var SkuToBarcodePrice = map[string]map[string]string{
 		"unitPrice": "183",
 	},
 	"8170106377": {
-		"barcode":   "6973601560836 ",
+		"barcode":   "6973601560836",
 		"unitPrice": "33",
+	},
+	"8172249756": {
+		"barcode":   "300091002",
+		"unitPrice": "24",
+	},
+	"8170740069": {
+		"barcode":   "0010362",
+		"unitPrice": "130",
+	},
+	"8170106513": {
+		"barcode":   "0010414",
+		"unitPrice": "66",
+	},
+	"8919894939": {
+		"barcode":   "6939713003579",
+		"unitPrice": "19",
+	},
+	"8171687556": {
+		"barcode":   "6973601560072",
+		"unitPrice": "8",
 	},
 }
 
