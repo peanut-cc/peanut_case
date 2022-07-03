@@ -10,20 +10,27 @@ import (
 	"strings"
 )
 
-var CodeToBarcode = map[string]string{
-	"E211231-3":   "0010414",
-	"E211231-1":   "6973601560836",
-	"skuTCMR9CI9": "6973601560997",
-	"skuP84OS9U4": "0010595",
-	"sku0CD830PD": "0010596",
-}
-
-var BarcodeToPrice = map[string]string{
-	"0010414":       "59",
-	"6973601560836": "28",
-	"6973601560997": "30",
-	"0010595":       "68",
-	"0010596":       "99",
+var SkuToBarcodePrice = map[string]map[string]string{
+	"E211231-3": {
+		"barcode":   "0010414",
+		"unitPrice": "59",
+	},
+	"E211231-1": {
+		"barcode":   "6973601560836",
+		"unitPrice": "28",
+	},
+	"skuTCMR9CI9": {
+		"barcode":   "6973601560997",
+		"unitPrice": "30",
+	},
+	"skuP84OS9U4": {
+		"barcode":   "0010595",
+		"unitPrice": "68",
+	},
+	"sku0CD830PD": {
+		"barcode":   "0010596",
+		"unitPrice": "99",
+	},
 }
 
 func init() {
@@ -70,21 +77,19 @@ func (p *Meichu) HandleUploadFile(fileName string) error {
 		address := row[9]
 		salesChannelName := p.CustomName
 		productName := strings.TrimSpace(row[10])
-		formatName := strings.TrimSpace(row[11])
 		tmpbarcode := strings.TrimSpace(row[12])
 		unitPrice := ""
 		barcode := ""
 		numbers := row[13]
-		if productName == "仁和黄金油柑酵素" && formatName == "3盒（买二送一）" && tmpbarcode == "E211231-3" {
-			barcode = CodeToBarcode[tmpbarcode]
-			unitPrice = BarcodeToPrice[barcode]
-		} else if productName == "仁和黄金油柑酵素" && formatName == "1盒" && tmpbarcode == "E211231-1" {
-			barcode = CodeToBarcode[tmpbarcode]
-			unitPrice = BarcodeToPrice[barcode]
+		bardcodeAndPriceMap, ok := SkuToBarcodePrice[tmpbarcode]
+		if ok {
+			barcode = bardcodeAndPriceMap["barcode"]
+			unitPrice = bardcodeAndPriceMap["unitPrice"]
 		} else {
 			barcode = "条码错误"
 			log.Printf("客户{%v} 处理excel {%v} 行 条码处理错误\n", p.Name, index)
 		}
+
 		axis := fmt.Sprintf("A%d", index+1)
 		err = f.SetSheetRow(sheetName, axis, &[]string{sn, shopSn, "", "", "", "", p.CustomName, "", "", receivePeople, phone, "", "",
 			province, city, county, address, "", "", "", "", "", "", "", "", salesChannelName, "",
