@@ -19,6 +19,7 @@ const (
 	FuYuanDaFuYanJie      = "媛福达_妇炎洁"
 	YunFan                = "云帆"
 	JiWuKeJi              = "极物科技"
+	HanMaiMai             = "涵卖卖"
 )
 
 var RowHeader = []string{"导入编号", "网店订单号", "下单时间", "付款时间", "承诺发货时间", "客户账号", "客户名称",
