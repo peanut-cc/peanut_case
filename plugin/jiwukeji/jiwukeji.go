@@ -23,6 +23,10 @@ var SkuToBarcodePrice = map[string]map[string]string{
 		"barcode":   "300030001",
 		"unitPrice": "99",
 	},
+	"skuUH5SP2UQ": {
+		"barcode":   "200010050",
+		"unitPrice": "59.4",
+	},
 }
 
 func init() {
