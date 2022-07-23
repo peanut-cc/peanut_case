@@ -6,6 +6,7 @@ import (
 	_ "github.com/peanut-cc/peanut_case/plugin/dingxiang"
 	_ "github.com/peanut-cc/peanut_case/plugin/fangtuanzhang"
 	_ "github.com/peanut-cc/peanut_case/plugin/hanmaimai"
+	_ "github.com/peanut-cc/peanut_case/plugin/haoyueshangmao"
 	_ "github.com/peanut-cc/peanut_case/plugin/jinyouningjiao"
 	_ "github.com/peanut-cc/peanut_case/plugin/jiwukeji"
 	_ "github.com/peanut-cc/peanut_case/plugin/meichu"
@@ -39,6 +40,8 @@ func initResultDir() {
 	os.MkdirAll("./result/涵卖卖", os.ModePerm)
 	os.MkdirAll("./upload/房团长", os.ModePerm)
 	os.MkdirAll("./result/房团长", os.ModePerm)
+	os.MkdirAll("./upload/皓跃商贸", os.ModePerm)
+	os.MkdirAll("./result/皓跃商贸", os.ModePerm)
 }
 
 func main() {

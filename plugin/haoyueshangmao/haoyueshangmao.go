@@ -1,4 +1,4 @@
-package fangtuanzhang
+package haoyueshangmao
 
 import (
 	"fmt"
@@ -11,20 +11,20 @@ import (
 )
 
 func init() {
-	fangtuanzhang := &FangTuanZhang{Name: plugin.FangTuanZhang, CustomName: "无痕-房团长"}
-	plugin.PluginMap[plugin.FangTuanZhang] = fangtuanzhang
+	haoyueshangmao := &HaoYueShangMao{Name: plugin.HaoYueShangMao, CustomName: "无痕-广州市皓跃商贸有限公司（皓跃商贸）"}
+	plugin.PluginMap[plugin.HaoYueShangMao] = haoyueshangmao
 }
 
-type FangTuanZhang struct {
+type HaoYueShangMao struct {
 	Name       string
 	CustomName string
 }
 
-func (p *FangTuanZhang) GetPluginName() string {
+func (p *HaoYueShangMao) GetPluginName() string {
 	return p.Name
 }
 
-func (p *FangTuanZhang) HandleUploadFile(fileName string) error {
+func (p *HaoYueShangMao) HandleUploadFile(fileName string) error {
 	rows, err := plugin.ReadExcel(fileName)
 	if err != nil {
 		fmt.Printf("客户{%v} 打开excel 报错{%v}", p.GetPluginName(), err)
@@ -44,28 +44,32 @@ func (p *FangTuanZhang) HandleUploadFile(fileName string) error {
 		if index == 0 {
 			continue
 		}
-		sn := row[0]
-		shopSn := row[0]
-		receivePeople := row[3]
-		phone := row[4]
-		province := row[5]
-		city := row[6]
-		county := row[7]
-		address := row[8]
+		sn := row[1]
+		shopSn := row[1]
+		receivePeople := row[2]
+		phone := row[3]
+		province := row[4]
+		city := row[5]
+		county := row[6]
+		address := row[7]
 		salesChannelName := p.CustomName
-		productName := row[10]
-		numbers := row[13]
-		unitPrice := ""
+		productName := row[9]
+		numbers := row[12]
+
 		barcode := ""
-		if strings.Contains(productName, "规格一") {
-			barcode = "6973601560997"
-			unitPrice = "23.5"
-		} else if strings.Contains(productName, "规格二") {
-			barcode = "0010595"
-			unitPrice = "54"
-		} else if strings.Contains(productName, "规格三") {
-			barcode = "0010596"
-			unitPrice = "79"
+		unitPrice := ""
+		if strings.Contains(productName, "三种香味各1瓶") {
+			barcode = "0010139"
+			unitPrice = "33"
+		} else if strings.Contains(productName, "樱花香三瓶装") {
+			barcode = "3000830103"
+			unitPrice = "33"
+		} else if strings.Contains(productName, "植物香三瓶装") {
+			barcode = "3000830104"
+			unitPrice = "33"
+		} else if strings.Contains(productName, "薰衣草三瓶装") {
+			barcode = "3000830102"
+			unitPrice = "33"
 		} else {
 			barcode = "错误"
 			unitPrice = "错误"
@@ -83,7 +87,7 @@ func (p *FangTuanZhang) HandleUploadFile(fileName string) error {
 			return err
 		}
 	}
-	filename := fmt.Sprintf("./result/房团长/房团长%v.xlsx", uuid.MustString())
+	filename := fmt.Sprintf("./result/皓跃商贸/皓跃商贸%v.xlsx", uuid.MustString())
 	err = f.SaveAs(filename)
 	if err != nil {
 		log.Printf("保存{%v} 失败\n", filename)
@@ -97,6 +101,6 @@ func (p *FangTuanZhang) HandleUploadFile(fileName string) error {
 	return nil
 }
 
-func (p *FangTuanZhang) DeleteUploadFile(fileName string) error {
+func (p *HaoYueShangMao) DeleteUploadFile(fileName string) error {
 	return os.Remove(fileName)
 }
