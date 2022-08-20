@@ -22,6 +22,7 @@ const (
 	HanMaiMai             = "涵卖卖"
 	FangTuanZhang         = "房团长"
 	HaoYueShangMao        = "皓跃商贸"
+	AiKang                = "爱康"
 )
 
 var RowHeader = []string{"导入编号", "网店订单号", "下单时间", "付款时间", "承诺发货时间", "客户账号", "客户名称",
