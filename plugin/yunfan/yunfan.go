@@ -18,7 +18,6 @@ var (
 	TaoMeiWu          = "无痕-桃美物"
 	WeiYangYouPin     = "无痕-未央优品"
 	YiFeiFan          = "无痕-上海艺梵电子商务有限公司（艺非凡）"
-	ShiDianDuShu      = "无痕-厦门十点电子商务有限公司（十点读书)"
 	LiXiangShengHuo   = "无痕-浙江和跃天明贸易有限公司（小羽私厨）"
 	YouJianQuanQiuGou = "无痕-有间全球购"
 )
@@ -53,18 +52,6 @@ var SaleChannelBarcodePrice = map[string]map[string]string{
 		"0010449":       "39",
 		"0010450":       "49",
 		"0010451":       "60",
-	},
-	ShiDianDuShu: {
-		"0010036":       "27",
-		"0010037":       "41",
-		"6970869081288": "18",
-		"6970869080946": "18",
-		"6970869081295": "18",
-		"200050039":     "36",
-		"0010414":       "119",
-		"0010301":       "36",
-		"0010302":       "36",
-		"0010303":       "36",
 	},
 	LiXiangShengHuo: {
 		"300083001036": "30.88",
@@ -236,20 +223,6 @@ func (p *YunFan) HandleUploadFile(fileName string) error {
 			} else {
 				barcode = "数据错误"
 				unitPrice = "数据错误"
-			}
-		} else if strings.Contains(tmpChannelName, "十点读书") {
-			p.CustomName = ShiDianDuShu
-			barcodePrice := SaleChannelBarcodePrice[ShiDianDuShu]
-			realBarcode := strings.Split(barcode, "FS-")
-			if len(realBarcode) != 2 {
-				unitPrice = "数据错误"
-			}
-			barcode = realBarcode[1]
-			_, ok := barcodePrice[barcode]
-			if !ok {
-				unitPrice = "数据错误"
-			} else {
-				unitPrice = barcodePrice[barcode]
 			}
 		} else if strings.Contains(tmpChannelName, "理想生活") {
 			p.CustomName = LiXiangShengHuo

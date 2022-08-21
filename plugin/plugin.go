@@ -10,6 +10,7 @@ import (
 )
 
 const (
+	ShiDianDuShu          = "十点读书"
 	DingXiang             = "丁香"
 	MeiChu                = "美初"
 	ShangHaiFanQi         = "上海梵迄"
