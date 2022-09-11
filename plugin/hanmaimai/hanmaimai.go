@@ -39,6 +39,10 @@ var ProductTypePrice = map[string]map[string]string{
 		"barcode":   "6949805914188",
 		"unitPrice": "15.2",
 	},
+	"【实发4瓶】叮当优品天然维VC软糖复合多种维生素0糖0脂45粒/瓶【买3赠1】": {
+		"barcode":   "0010729",
+		"unitPrice": "72.3",
+	},
 }
 
 func init() {
