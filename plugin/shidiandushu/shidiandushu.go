@@ -24,7 +24,7 @@ var BoardeToPrice = map[string]string{
 }
 
 func init() {
-	shidiandushu := &ShiDianDuShu{Name: plugin.DingXiang, CustomName: "无痕-厦门十点电子商务有限公司（十点读书)"}
+	shidiandushu := &ShiDianDuShu{Name: plugin.ShiDianDuShu, CustomName: "无痕-厦门十点电子商务有限公司（十点读书)"}
 	plugin.PluginMap[plugin.ShiDianDuShu] = shidiandushu
 }
 
@@ -45,6 +45,7 @@ func (p *ShiDianDuShu) HandleUploadFile(fileName string) error {
 	}
 	f := excelize.NewFile()
 	sheet := f.NewSheet("Sheet1")
+	f.UnprotectSheet("Sheet1")
 	sheetName := f.GetSheetName(sheet)
 	err = f.SetSheetRow(sheetName, "A1", &plugin.RowHeader)
 	if err != nil {
