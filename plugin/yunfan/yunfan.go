@@ -82,11 +82,11 @@ var NoBarcode = map[string]map[string]map[string]string{
 	YouJianQuanQiuGou: {
 		"2瓶装": {
 			"barcode":   "0010362",
-			"unitPrice": "125",
+			"unitPrice": "119",
 		},
 		"1瓶装": {
 			"barcode":   "6973601560782",
-			"unitPrice": "69",
+			"unitPrice": "64",
 		},
 	},
 }
