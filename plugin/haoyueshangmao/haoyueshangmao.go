@@ -2,12 +2,13 @@ package haoyueshangmao
 
 import (
 	"fmt"
-	"github.com/peanut-cc/peanut_case/plugin"
-	"github.com/peanut-cc/peanut_case/utils/uuid"
-	"github.com/xuri/excelize/v2"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/peanut-cc/peanut_case/plugin"
+	"github.com/peanut-cc/peanut_case/utils/uuid"
+	"github.com/xuri/excelize/v2"
 )
 
 func init() {
@@ -44,17 +45,17 @@ func (p *HaoYueShangMao) HandleUploadFile(fileName string) error {
 		if index == 0 {
 			continue
 		}
-		sn := row[1]
-		shopSn := row[1]
-		receivePeople := row[2]
-		phone := row[3]
-		province := row[4]
-		city := row[5]
-		county := row[6]
-		address := row[7]
+		sn := row[0]
+		shopSn := row[0]
+		receivePeople := row[1]
+		phone := row[2]
+		province := row[3]
+		city := row[4]
+		county := row[5]
+		address := row[6]
 		salesChannelName := p.CustomName
-		productName := row[9]
-		numbers := row[12]
+		productName := row[8]
+		numbers := row[11]
 
 		barcode := ""
 		unitPrice := ""

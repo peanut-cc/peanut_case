@@ -2,12 +2,13 @@ package xiaoxiaobaomama
 
 import (
 	"fmt"
-	"github.com/peanut-cc/peanut_case/plugin"
-	"github.com/peanut-cc/peanut_case/utils/uuid"
-	"github.com/xuri/excelize/v2"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/peanut-cc/peanut_case/plugin"
+	"github.com/peanut-cc/peanut_case/utils/uuid"
+	"github.com/xuri/excelize/v2"
 )
 
 var (
@@ -18,7 +19,7 @@ var (
 		"6970869080946": "16.5",
 		"6970869081295": "16.5",
 		"300091001":     "27",
-		"300091002":     "26.5",
+		"300091002":     "19.5",
 		"300083005021":  "26",
 		"6973601560157": "31.7",
 		"200010038":     "54.9",
